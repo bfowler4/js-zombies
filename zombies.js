@@ -141,10 +141,10 @@ class Player {
   }
 
   isItemInPack(item) {
-    if (this._pack.indexOf(item) === -1) {
+    if (this.getPack().indexOf(item) === -1) {
       return false;
     } else {
-      return this._pack.indexOf(item);
+      return this.getPack().indexOf(item);
     }
   }
 
@@ -185,12 +185,12 @@ class Player {
    * @return {boolean} true/false     Whether player was able to store item in pack.
    */
   takeItem(item) {
-    if (this._pack.length >= 3) {
+    if (this.getPack().length >= 3) {
       console.log(`Pack is full!`);
       return false;
     } else {
       console.log(`Player: ${this._name}, Item: ${item.name}`);
-      this._pack.push(item);
+      this.getPack().push(item);
       return true;
     }
   }
@@ -227,7 +227,7 @@ class Player {
       return false;
     } else {
       console.log(`Player: ${this._name}, Item: ${item.name} \nItem was discarded.`)
-      this._pack.splice(itemIndex, 1);
+      this.getPack().splice(itemIndex, 1);
       return true;
     }
   }
@@ -255,9 +255,9 @@ class Player {
     let itemIndex = this.isItemInPack(itemToEquip);
     if (itemToEquip instanceof (Weapon) && itemIndex !== false) {
       if (this._equipped) {
-        this._pack[itemIndex] = this._equipped;
+        this.getPack()[itemIndex] = this._equipped;
       } else {
-        this._pack.splice(itemIndex, 1);
+        this.getPack().splice(itemIndex, 1);
       }
       this._equipped = itemToEquip;
     }
@@ -284,8 +284,8 @@ class Player {
   eat(itemToEat) {
     let itemIndex = this.isItemInPack(itemToEat);
     if (itemToEat instanceof (Food) && itemIndex !== false) {
-      this._pack.splice(itemToEat, 1);
-      this._health = this._health + itemToEat.energy > this._maxHealth ? this._maxHealth : this._health + itemToEat.energy;
+      this.getPack().splice(itemToEat, 1);
+      this._health = this._health + itemToEat.energy > this.getMaxHealth() ? this.getMaxHealth() : this._health + itemToEat.energy;
     }
   }
 
